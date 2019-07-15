@@ -1,21 +1,21 @@
-import styled from "styled-components";
-import color from "color";
+import styled from 'styled-components'
+import color from 'color'
 
 const transform = `
   transform: scale(1.02);
-`;
+`
 
 const lighten = from => {
   color(from)
     .lighten(0.333)
-    .hex();
-};
+    .hex()
+}
 
 const activeCSS = props => `
   background-color: ${lighten(props.color)} !important;
   animation: 0.5s linear;
   ${transform}
-`;
+`
 
 const Pad = styled.div`
   width: 75%;
@@ -25,7 +25,7 @@ const Pad = styled.div`
   cursor: pointer;
   animation: none;
   transition: 0.2s;
-  ${props => (props.active ? activeCSS(props) : "")}
+  ${props => (props.active ? activeCSS(props) : '')}
 
   &:active {
     background-color: ${({ color }) => lighten(color)}
@@ -53,6 +53,6 @@ const Pad = styled.div`
     border-radius: 20px 20px 320px 20px;
   }
 
-`;
+`
 
-export default Pad;
+export default Pad

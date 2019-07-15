@@ -1,34 +1,34 @@
-const path = require("path");
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const path = require('path')
+const HtmlWebPackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry: ["@babel/polyfill", "./src/index.jsx"],
+  entry: ['@babel/polyfill', './src/index.jsx'],
   output: {
-    path: path.join(__dirname, "/build"),
-    filename: "bundle.[hash].js"
+    path: path.join(__dirname, '/build'),
+    filename: 'bundle.[hash].js'
   },
   module: {
     rules: [
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"]
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
+          loader: 'babel-loader'
         }
       }
     ]
   },
   resolve: {
-    extensions: [".js", ".jsx"]
+    extensions: ['.js', '.jsx']
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: "./public/index.html",
-      filename: "index.html"
+      template: './public/index.html',
+      filename: 'index.html'
     })
   ]
-};
+}

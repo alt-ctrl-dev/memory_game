@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import React from "react";
+import styled from 'styled-components'
+import React from 'react'
 
 const InnerButton = styled.button`
   padding: 0.25em 1em;
@@ -20,10 +20,10 @@ const InnerButton = styled.button`
   border-radius: 4px;
   letter-spacing: 0.02857em;
   text-transform: uppercase;
-`;
+`
 
 const Button = ({ children, onClick }) => {
-  return <InnerButton onClick={onClick}>{children}</InnerButton>;
-};
+  return <InnerButton onClick={onClick}>{children}</InnerButton>
+}
 
-export default Button;
+export default Button
