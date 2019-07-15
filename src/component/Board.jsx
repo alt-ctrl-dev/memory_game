@@ -1,6 +1,6 @@
-import React, { Fragment } from "react";
-import styled from "styled-components";
-import Pad from "./ui/Pad";
+import React, { Fragment } from 'react'
+import styled from 'styled-components'
+import Pad from './ui/Pad'
 
 const BoardRow = styled.div`
   box-sizing: border-box;
@@ -9,29 +9,29 @@ const BoardRow = styled.div`
   justify-content: space-evenly;
   height: 50%;
   width: 100%;
-`;
+`
 
-function Board() {
+function Board () {
   return (
     <Fragment>
       <BoardRow>
-        <Pad active={false} color="blue">
+        <Pad active={false} color='blue'>
           Blue
         </Pad>
-        <Pad active={false} color="red">
+        <Pad active={false} color='red'>
           Red
         </Pad>
       </BoardRow>
       <BoardRow>
-        <Pad active={false} color="green">
+        <Pad active={false} color='green'>
           Green
         </Pad>
-        <Pad active={false} color="yellow">
+        <Pad active={false} color='yellow'>
           Yellow
         </Pad>
       </BoardRow>
     </Fragment>
-  );
+  )
 }
 
-export default Board;
+export default Board
