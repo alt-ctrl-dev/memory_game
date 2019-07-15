@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const ScoreBlock = styled.p`
   font-size: 1.25em;
   text-align: center;
-  margin: 10px auto;
+  margin: 0px;
   color: #fff;
 `
 

@@ -3,9 +3,9 @@ import Header from './ui/Header'
 import Score from './ui/Score'
 import Board from './Board'
 
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import styled from 'styled-components'
-import { startGame } from '../actions'
+import { startGame, fetchNames } from '../actions'
 import { connect } from 'react-redux'
 
 const GameArea = styled.div`
@@ -26,7 +26,10 @@ const GameHeader = styled.div`
   background-color: #000;
 `
 
-function Game ({ game, startGame }) {
+function Game ({ game, startGame, fetchNames }) {
+  useEffect(() => {
+    fetchNames()
+  }, [])
   console.log('Game', game)
   return (
     <Fragment>
@@ -36,7 +39,7 @@ function Game ({ game, startGame }) {
       </GameHeader>
       <GameArea id='gamearea'>
         {game.gameStarted ? (
-          <Board>Game started</Board>
+          <Board pads={game.pads}>Game started</Board>
         ) : (
           <div>
             <Button
@@ -62,5 +65,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { startGame }
+  { startGame, fetchNames }
 )(Game)
