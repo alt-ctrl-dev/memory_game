@@ -15,12 +15,20 @@ function Board() {
   return (
     <Fragment>
       <BoardRow>
-        <Pad color="blue" />
-        <Pad color="red" />
+        <Pad active={false} color="blue">
+          Blue
+        </Pad>
+        <Pad active={false} color="red">
+          Red
+        </Pad>
       </BoardRow>
       <BoardRow>
-        <Pad color="green" />
-        <Pad color="yellow" />
+        <Pad active={false} color="green">
+          Green
+        </Pad>
+        <Pad active={false} color="yellow">
+          Yellow
+        </Pad>
       </BoardRow>
     </Fragment>
   );

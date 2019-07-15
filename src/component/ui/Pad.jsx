@@ -1,29 +1,18 @@
-import styled, { keyframes, css } from "styled-components";
+import styled, { css } from "styled-components";
 import color from "color";
+import React from "react";
 
-const createNeonAnimation = () => keyframes`
-  from {
-    border: 1px solid #FFF0;
-    transform: scale(1)
-  }
-  to {
-    border: 10px solid #fff;
-    transform: scale(1);
-  }
+const activeCSS = () => css`
+  box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.8);
+  transform: scale(1.02);
 `;
 
-const lighten = from => {
+const negate = from =>
   color(from)
-    .lighten(0.333)
+    .negate()
     .hex();
-};
 
-const activeCSS = props => css`
-  background-color: ${lighten(props.color)} !important;
-  animation: ${createNeonAnimation()} 0.5s linear;
-`;
-
-const Pad = styled.div`
+const PadBox = styled.div`
   width: 25%;
   height: 75%;
   box-sizing: border-box;
@@ -31,19 +20,19 @@ const Pad = styled.div`
   cursor: pointer;
   animation: none;
   transition: 0.2s;
-  ${props => (props.active ? activeCSS(props) : "")}
-  position: relative;
-  border: 1px solid #FFF0;
-  
+  color:${({ color }) => negate(color)};
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  ${props => (props.active ? activeCSS(props) : null)}
+
   &:hover {
-    background-color: ${({ color }) => lighten(color)}
     ${activeCSS}
   }
-  
 `;
-// &:active {
-//   background-color: ${({ color }) => lighten(color)}
-//   ${activeCSS}
-// }
+
+function Pad(props) {
+  return <PadBox {...props}>{props.children}</PadBox>;
+}
 
 export default Pad;
