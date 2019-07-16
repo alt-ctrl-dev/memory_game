@@ -1,12 +1,12 @@
-import Button from './ui/Button'
-import Header from './ui/Header'
-import Score from './ui/Score'
-import Board from './Board'
+import Button from "./ui/Button";
+import Header from "./ui/Header";
+import Score from "./ui/Score";
+import Board from "./Board";
 
-import React, { Fragment, useEffect } from 'react'
-import styled from 'styled-components'
-import { startGame, fetchNames } from '../actions'
-import { connect } from 'react-redux'
+import React, { Fragment, useEffect } from "react";
+import styled from "styled-components";
+import { startGame, fetchNames } from "../actions";
+import { connect } from "react-redux";
 
 const GameArea = styled.div`
   height: 100%;
@@ -16,7 +16,7 @@ const GameArea = styled.div`
   justify-content: center;
   overflow: hidden;
   background-color: #000;
-`
+`;
 
 const GameHeader = styled.div`
   display: flex;
@@ -24,46 +24,61 @@ const GameHeader = styled.div`
   align-items: center;
   justify-content: center;
   background-color: #000;
-`
+`;
 
-function Game ({ game, startGame, fetchNames }) {
+const PreGameArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+  color: #fff;
+`;
+
+function Game({
+  pads,
+  gameStarted,
+  gameFinished,
+  score,
+  startGame,
+  fetchNames
+}) {
   useEffect(() => {
-    fetchNames()
-  }, [])
-  console.log('Game', game)
+    fetchNames();
+  }, []);
   return (
     <Fragment>
       <GameHeader>
         <Header>Sequence memory game</Header>
-        {game.gameStarted ? <Score score={game.score} /> : null}
+        {gameStarted ? <Score score={score} /> : null}
       </GameHeader>
-      <GameArea id='gamearea'>
-        {game.gameStarted ? (
-          <Board pads={game.pads}>Game started</Board>
+      <GameArea id="gamearea">
+        {gameStarted && !gameFinished ? (
+          <Board />
         ) : (
-          <div>
+          <PreGameArea>
+            {gameFinished ? <h1>Ah bugger! Your score is {score}</h1> : null}
             <Button
               disabled
               onClick={() => {
-                startGame()
+                const { id } = pads[Math.floor(Math.random() * pads.length)];
+                startGame(id);
               }}
             >
               Start Game
             </Button>
-          </div>
+          </PreGameArea>
         )}
       </GameArea>
     </Fragment>
-  )
+  );
 }
 
 const mapStateToProps = state => {
-  console.log('Game mapStateToProps', state)
-  //   return {songs:state.songs}
-  return state
-}
+  return { ...state.game };
+};
 
 export default connect(
   mapStateToProps,
   { startGame, fetchNames }
-)(Game)
+)(Game);

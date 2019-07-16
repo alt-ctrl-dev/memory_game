@@ -1,6 +1,10 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import styled from "styled-components";
 import Pad from "./ui/Pad";
+import { startAIMoves, makeGuess } from "../actions";
+import { connect } from "react-redux";
+import sleep from "../helpers/sleep";
+import { GAME_DELAY_TIME } from "../helpers/constants";
 
 const BoardRow = styled.div`
   box-sizing: border-box;
@@ -11,19 +15,67 @@ const BoardRow = styled.div`
   width: 100%;
 `;
 
-function Board({ pads }) {
+function Board(props) {
+  const { pads, startAIMoves } = props;
+
+  function onPadClick({ id }) {
+    const { ai, guessed, gameFinished, makeGuess } = props;
+    const tail = guessed.length;
+    console.log("onPadClick tail", tail);
+    const succeeded = ai[tail] === id;
+
+    console.log("onPadClick", id, ai[tail], succeeded, props);
+    if (!gameFinished) {
+      makeGuess({ id, succeeded });
+    }
+  }
+
+  useEffect(() => {
+    sleep(GAME_DELAY_TIME).then(() => {
+      startAIMoves();
+    });
+  }, []);
+
   return (
     <Fragment>
       <BoardRow>
-        <Pad active={pads[0].active} color={pads[0].id} url={pads[0].url} />
-        <Pad active={pads[1].active} color={pads[1].id} url={pads[1].url} />
+        {pads.slice(0, 2).map((pad, i) => (
+          <Pad
+            key={i}
+            active={pad.active}
+            color={pad.id}
+            url={pad.url}
+            onClick={_ => onPadClick({ id: pad.id })}
+          />
+        ))}
       </BoardRow>
       <BoardRow>
-        <Pad active={pads[2].active} color={pads[2].id} url={pads[2].url} />
-        <Pad active={pads[3].active} color={pads[3].id} url={pads[3].url} />
+        {pads.slice(2, 4).map((pad, i) => (
+          <Pad
+            key={i}
+            active={pad.active}
+            color={pad.id}
+            url={pad.url}
+            onClick={_ => onPadClick({ id: pad.id })}
+          />
+        ))}
       </BoardRow>
     </Fragment>
   );
 }
 
-export default Board;
+const mapStateToProps = state => {
+  return {
+    ...state.player,
+    pads: state.game.pads,
+    gameFinished: state.game.gameFinished
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {
+    startAIMoves,
+    makeGuess
+  }
+)(Board);

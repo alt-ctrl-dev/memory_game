@@ -1,4 +1,11 @@
-import { START_GAME, NEXT_LEVEL, FETCH_NAMES } from "../helpers/constants";
+import {
+  START_GAME,
+  NEXT_LEVEL,
+  FETCH_NAMES,
+  PAD_LIT,
+  PAD_UNLIT,
+  GUESS_COLOR
+} from "../helpers/constants";
 // GUESS_COLOR, NEXT_LEVEL,
 export const initialState = {
   gameFinished: false,
@@ -29,11 +36,7 @@ export const initialState = {
       name: "",
       url: ""
     }
-  ],
-  match: {
-    guessed: [],
-    all: []
-  }
+  ]
 };
 
 function shuffle(array) {
@@ -41,8 +44,9 @@ function shuffle(array) {
 }
 
 export default function game(state = initialState, { type, payload }) {
-  console.log("type", type);
-  console.log("payload", payload);
+  console.log("GAME type", type);
+  console.log("GAME payload", payload);
+  console.log("GAME state", state);
   switch (type) {
     case START_GAME: {
       let tempState = { ...state };
@@ -67,10 +71,33 @@ export default function game(state = initialState, { type, payload }) {
         tempState.pads[index].name = `${item.name} from ${item.region}`;
         tempState.pads[index].url = `https://avatars.dicebear.com/v2/${
           item.gender
-        }/${item.name}.svg?options[mood][]=happy`;
+        }/${encodeURIComponent(item.name)}.svg?options[mood][]=happy`;
       });
       return {
         ...tempState
+      };
+    }
+
+    case PAD_LIT: {
+      const pads = state.pads.map(b => ({
+        ...b,
+        active: payload.id === b.id
+      }));
+      return { ...state, pads };
+    }
+
+    case PAD_UNLIT: {
+      const pads = state.pads.map(b => ({
+        ...b,
+        active: false
+      }));
+      return { ...state, pads };
+    }
+
+    case GUESS_COLOR: {
+      return {
+        ...state,
+        gameFinished: !payload.succeeded
       };
     }
 

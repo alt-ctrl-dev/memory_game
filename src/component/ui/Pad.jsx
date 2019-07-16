@@ -2,9 +2,13 @@ import styled, { css } from "styled-components";
 import color from "color";
 import React from "react";
 
+const transform = () => css`
+  transform: scale(1.02);
+`;
+
 const activeCSS = () => css`
   box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.8);
-  transform: scale(1.02);
+  ${transform}
 `;
 
 const negate = from =>
@@ -34,7 +38,7 @@ const PadBox = styled.div`
   background-size: contain;
 
   &:hover {
-    ${activeCSS}
+    ${transform}
   }
 `;
 
