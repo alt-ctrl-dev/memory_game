@@ -14,10 +14,8 @@ import uiname from "../apis/uinames";
 import sleep from "../helpers/sleep";
 
 const start = createAction(START_GAME);
-export const startGame = next => start({ next });
 
 const next = createAction(NEXT_LEVEL);
-export const nextLevel = nextID => next({ nextID });
 
 const lightPad = createAction(PAD_LIT);
 const unlightPad = createAction(PAD_UNLIT);
@@ -25,6 +23,11 @@ const unlightPad = createAction(PAD_UNLIT);
 const guessColor = createAction(GUESS_COLOR);
 
 const fetch = createAction(FETCH_NAMES);
+
+export const startGame = next => start({ next });
+
+export const nextLevel = nextID => next({ nextID });
+
 export const fetchNames = () => async dispatch => {
   let response = {};
   try {

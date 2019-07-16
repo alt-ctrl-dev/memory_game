@@ -44,9 +44,6 @@ function shuffle(array) {
 }
 
 export default function game(state = initialState, { type, payload }) {
-  console.log("GAME type", type);
-  console.log("GAME payload", payload);
-  console.log("GAME state", state);
   switch (type) {
     case START_GAME: {
       let tempState = { ...state };

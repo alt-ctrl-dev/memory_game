@@ -6,8 +6,6 @@ export const initialState = {
 };
 
 export default function player(state = initialState, { type, payload }) {
-  console.log("PLAYER type", type);
-  console.log("PLAYER payload", payload);
   switch (type) {
     case START_GAME:
       return {
