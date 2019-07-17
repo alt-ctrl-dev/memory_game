@@ -29,20 +29,6 @@ export default function player (state = initialState, { type, payload }) {
         guessed: []
       }
 
-      // case FETCH_NAMES: {
-      //   let tempState = { ...state };
-
-      //   payload.forEach((item, index) => {
-      //     tempState.pads[index].name = `${item.name} from ${item.region}`;
-      //     tempState.pads[index].url = `https://avatars.dicebear.com/v2/${
-      //       item.gender
-      //     }/${item.name}.svg?options[mood][]=happy`;
-      //   });
-      //   return {
-      //     ...tempState
-      //   };
-      // }
-
     default:
       return state
   }
