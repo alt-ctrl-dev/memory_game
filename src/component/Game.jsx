@@ -1,12 +1,12 @@
-import Button from "./ui/Button";
-import Header from "./ui/Header";
-import Score from "./ui/Score";
-import Board from "./Board";
+import Button from './ui/Button'
+import Header from './ui/Header'
+import Score from './ui/Score'
+import Board from './Board'
 
-import React, { Fragment, useEffect } from "react";
-import styled from "styled-components";
-import { startGame, fetchNames } from "../actions";
-import { connect } from "react-redux";
+import React, { Fragment, useEffect } from 'react'
+import styled from 'styled-components'
+import { startGame, fetchNames } from '../actions'
+import { connect } from 'react-redux'
 
 const GameArea = styled.div`
   height: 100%;
@@ -16,7 +16,7 @@ const GameArea = styled.div`
   justify-content: center;
   overflow: hidden;
   background-color: #000;
-`;
+`
 
 const GameHeader = styled.div`
   display: flex;
@@ -24,7 +24,7 @@ const GameHeader = styled.div`
   align-items: center;
   justify-content: center;
   background-color: #000;
-`;
+`
 
 const PreGameArea = styled.div`
   display: flex;
@@ -33,9 +33,9 @@ const PreGameArea = styled.div`
   justify-content: center;
   background-color: #000;
   color: #fff;
-`;
+`
 
-function Game({
+function Game ({
   pads,
   gameStarted,
   gameFinished,
@@ -44,15 +44,15 @@ function Game({
   fetchNames
 }) {
   useEffect(() => {
-    fetchNames();
-  }, []);
+    fetchNames()
+  }, [])
   return (
     <Fragment>
       <GameHeader>
         <Header>Sequence memory game</Header>
         {gameStarted ? <Score score={score} /> : null}
       </GameHeader>
-      <GameArea id="gamearea">
+      <GameArea id='gamearea'>
         {gameStarted && !gameFinished ? (
           <Board />
         ) : (
@@ -61,8 +61,8 @@ function Game({
             <Button
               disabled
               onClick={() => {
-                const { id } = pads[Math.floor(Math.random() * pads.length)];
-                startGame(id);
+                const { id } = pads[Math.floor(Math.random() * pads.length)]
+                startGame(id)
               }}
             >
               Start Game
@@ -71,14 +71,14 @@ function Game({
         )}
       </GameArea>
     </Fragment>
-  );
+  )
 }
 
 const mapStateToProps = state => {
-  return { ...state.game };
-};
+  return { ...state.game }
+}
 
 export default connect(
   mapStateToProps,
   { startGame, fetchNames }
-)(Game);
+)(Game)

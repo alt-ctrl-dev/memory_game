@@ -1,10 +1,10 @@
-import React, { Fragment, useEffect } from "react";
-import styled from "styled-components";
-import Pad from "./ui/Pad";
-import { startAIMoves, makeGuess } from "../actions";
-import { connect } from "react-redux";
-import sleep from "../helpers/sleep";
-import { GAME_DELAY_TIME } from "../helpers/constants";
+import React, { Fragment, useEffect } from 'react'
+import styled from 'styled-components'
+import Pad from './ui/Pad'
+import { startAIMoves, makeGuess } from '../actions'
+import { connect } from 'react-redux'
+import sleep from '../helpers/sleep'
+import { GAME_DELAY_TIME } from '../helpers/constants'
 
 const BoardRow = styled.div`
   box-sizing: border-box;
@@ -13,28 +13,25 @@ const BoardRow = styled.div`
   justify-content: space-evenly;
   height: 50%;
   width: 100%;
-`;
+`
 
-function Board(props) {
-  const { pads, startAIMoves } = props;
+function Board (props) {
+  const { pads, startAIMoves } = props
 
-  function onPadClick({ id }) {
-    const { ai, guessed, gameFinished, makeGuess } = props;
-    const tail = guessed.length;
-    console.log("onPadClick tail", tail);
-    const succeeded = ai[tail] === id;
-
-    console.log("onPadClick", id, ai[tail], succeeded, props);
+  function onPadClick ({ id }) {
+    const { ai, guessed, gameFinished, makeGuess } = props
+    const tail = guessed.length
+    const succeeded = ai[tail] === id
     if (!gameFinished) {
-      makeGuess({ id, succeeded });
+      makeGuess({ id, succeeded })
     }
   }
 
   useEffect(() => {
     sleep(GAME_DELAY_TIME).then(() => {
-      startAIMoves();
-    });
-  }, []);
+      startAIMoves()
+    })
+  }, [])
 
   return (
     <Fragment>
@@ -61,7 +58,7 @@ function Board(props) {
         ))}
       </BoardRow>
     </Fragment>
-  );
+  )
 }
 
 const mapStateToProps = state => {
@@ -69,8 +66,8 @@ const mapStateToProps = state => {
     ...state.player,
     pads: state.game.pads,
     gameFinished: state.game.gameFinished
-  };
-};
+  }
+}
 
 export default connect(
   mapStateToProps,
@@ -78,4 +75,4 @@ export default connect(
     startAIMoves,
     makeGuess
   }
-)(Board);
+)(Board)
